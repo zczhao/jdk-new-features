@@ -1,0 +1,11 @@
+方法名      方法作用        返回值类型      方法种类
+count       统计个数        long            终结
+forEach     逐一处理        void            终结
+filter      过滤            Stream          函数拼接
+limit       取用前几个      Stream          函数拼接
+skip        跳过前几个      Stream          函数拼接
+map         映射            Stream          函数拼接
+concat      组合            Stream          函数拼接
+
+终结方法：返回值类型不再是Stream类型的方法，不再支持链式调用
+非终结方法：返回值仍然是Stream类型的方法，支持链式调用

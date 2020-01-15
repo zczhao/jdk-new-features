@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings
+.gradle
+bin
+target
+build
+*.class
+nb-configuration.xml

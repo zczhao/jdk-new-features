@@ -1,0 +1,12 @@
+模块化的目标：
+    1、减少内存的开销，提高效率
+    2、强土封装：每一个模块都声明了哪些包是公开的哪些包是内部的，Java编译和运行时就可以实施这些规则来确保外部模块无法使用内部类型。
+
+模块化的代码演示步骤
+    需求：新建一个module模块，然后使用ModuleB模块进行访问
+    1、创建一个ModuleA，然后创建两个包，com.zzc.utils和com.zzc.model
+    2、在utils包k中创建一个ArrayUtils工具类并创建一个获取最大值的方法
+    3、在model包中创建一个Person类
+    4、新建一个输出模块信息，只是输出utils包，model包对外隐藏
+    5、创建一个ModuleB，然后创建一个ModuleTest类，测试使用ArrayUtils
+    6、创建一个输出模块信息，并添加依赖
