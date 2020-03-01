@@ -1,15 +1,18 @@
 package demo007newdatetimeapi;
 
 import java.time.Clock;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import org.junit.Test;
@@ -31,7 +34,6 @@ public class Demo02 {
         System.out.println("year = " + localDate.getYear());
         System.out.println("month = " + localDate.getMonthValue());
         System.out.println("day = " + localDate.getDayOfMonth());
-
     }
 
     /**
@@ -68,13 +70,25 @@ public class Demo02 {
 
         LocalDateTime localDateTime = LocalDateTime.of(2020, 1, 24, 23, 59, 59);
         System.out.println("localDateTime = " + localDateTime);
-        System.out.println("year = " + localDateTime.getYear());
-        System.out.println("month = " + localDateTime.getMonthValue());
-        System.out.println("day = " + localDateTime.getDayOfMonth());
-        System.out.println("hour = " + localDateTime.getHour());
-        System.out.println("minute = " + localDateTime.getMinute());
-        System.out.println("second = " + localDateTime.getSecond());
-        System.out.println("nano = " + localDateTime.getNano());
+        
+        System.out.println("year = " + localDateTime.get(ChronoField.YEAR));// 年 结果：2020
+        System.out.println("year = " + localDateTime.getYear());// 年 结果：2020
+        
+        Month month = localDateTime.getMonth(); // 月
+        System.out.println("month = " + month); // 结果：JANUARY
+        System.out.println("month = " + localDateTime.get(ChronoField.MONTH_OF_YEAR));// 结果：1
+        System.out.println("month = " + localDateTime.getMonthValue());// 结果：1
+ 
+        System.out.println("day = " + localDateTime.getDayOfMonth()); // 日 结果：24
+        
+        DayOfWeek week = localDateTime.getDayOfWeek(); // 星期
+        System.out.println("week = " + week); // 结果：FRIDAY
+        System.out.println("week = " + localDateTime.get(ChronoField.DAY_OF_WEEK)); // 结果：5
+        
+        System.out.println("hour = " + localDateTime.getHour()); // 时 结果：23
+        System.out.println("minute = " + localDateTime.getMinute()); // 分 结果：59
+        System.out.println("second = " + localDateTime.getSecond()); // 秒 结果：29
+        System.out.println("nano = " + localDateTime.getNano()); // 纳秒 结果：0
     }
 
     @Test
@@ -86,7 +100,9 @@ public class Demo02 {
 
         // 增加或减去时间
         // plusXxx()：增加指定的时间
+        
         System.out.println(now.plusYears(2));
+        
         // minusXxx()：减去指定的时间
         System.out.println(now.minusYears(2));
     }

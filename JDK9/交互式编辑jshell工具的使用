@@ -1,0 +1,30 @@
+1、打开jshell工具
+    前提：
+        1、当前环境是JDK9以及JDK9以上的版本
+        2、配置path环境变量，才能直接使用控制台打开
+        3、在控制台直接输入jshell命令即可打开该工具
+2、直接声明变量、方法
+    声明变量：
+        int a = 10;
+    定义方法：
+        public void sum(int i,int j){System.out.println("sum = " + (i + j));}
+    执行方法：
+        sum(10,20);
+3、/list 查看当前所有的代码
+
+4、/methods 查看所有的方法
+
+5、/var 查看所有的变量
+
+6、/edit 打开编辑器
+
+7、/open 路径 执行对应的代码
+
+8、/imports 查看默认导入的包
+
+9、/import 导入包
+    导入java.util包：
+        /import java.util.*;
+
+jshell交互式编程是什么，作用？
+    交互式编程就是马上让我们看到代码的结果

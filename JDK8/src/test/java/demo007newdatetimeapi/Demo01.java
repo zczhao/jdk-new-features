@@ -2,6 +2,8 @@ package demo007newdatetimeapi;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import org.junit.Test;
 
@@ -32,4 +34,17 @@ public class Demo01 {
 
     }
 
+    @Test
+    public void test02() {
+        // 1、获取当前日期
+        LocalDateTime today = LocalDateTime.now();
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-MM-dd 21:00:00");
+        String todayStr = dft.format(today);
+        LocalDateTime yesterday = today.minusDays(1);
+        String yesterdayStr = dft.format(yesterday);
+        System.out.println("todayStr = " + todayStr);
+        System.out.println("yesterdayStr = " + yesterdayStr);
+        System.out.println("" + today.getDayOfWeek().name());
+        
+    }
 }

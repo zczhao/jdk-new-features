@@ -78,10 +78,10 @@ public class Demo01 {
 
     @Test
     public void test06() {
-        User user = new User("Hello World", 18);
+        Student user = new Student("Hello World", 18);
         System.out.println(getUpperUserName01(user));
 
-        Optional<User> opl = Optional.of(user);
+        Optional<Student> opl = Optional.of(user);
         System.out.println(getUpperUserName02(opl));;
     }
 
@@ -91,7 +91,7 @@ public class Demo01 {
      * @param user
      * @return
      */
-    public static String getUpperUserName01(User user) {
+    public static String getUpperUserName01(Student user) {
         if (user != null) {
             String userName = user.getUserName();
             if (userName != null) {
@@ -108,9 +108,9 @@ public class Demo01 {
      * @param opl
      * @return
      */
-    public static String getUpperUserName02(Optional<User> opl) {
+    public static String getUpperUserName02(Optional<Student> opl) {
         //return opl.map(u -> u.getUserName()).map(s -> s.toUpperCase()).orElse("null");
-        return opl.map(User::getUserName).map(String::toUpperCase).orElse("null");
+        return opl.map(Student::getUserName).map(String::toUpperCase).orElse("null");
     }
 
 }

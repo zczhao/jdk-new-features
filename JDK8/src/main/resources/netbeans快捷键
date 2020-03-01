@@ -8,7 +8,7 @@
 代码模块实时自动补全：Tab
 变量重命名：Ctrl+R
 代码自动插入：Alt+Insert
-代码提示操作：Alt+Enter
+代码提示操作：Alt+Enter（选中代码生成：try-catch）
 自动格式化代码：Alt+Shift+F
 javadoc弹出框提示：Ctrl+Shif+Space
 查找类：Alt+Shift+O

@@ -1,6 +1,7 @@
 package demo006optional;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.Test;
 
 public class Demo01 {
@@ -21,5 +22,14 @@ public class Demo01 {
         }, () -> {
             System.out.println("没有值");
         });
+    }
+
+    /**
+     * Optional 增加了可以转换成 Stream 的方法
+     */
+    @Test
+    public void test02() {
+        Stream<Integer> s = Optional.of(1).stream();
+        s.forEach(System.out::print);
     }
 }

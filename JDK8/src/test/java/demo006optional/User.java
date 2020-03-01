@@ -1,36 +1,33 @@
 package demo006optional;
 
 public class User {
+    private String name;
+    private String phone;
+    private Address address;
 
-    private String userName;
-    private Integer age;
-
-    public User() {
+    public String getName() {
+        return name;
     }
 
-    public User(String userName, Integer age) {
-        this.userName = userName;
-        this.age = age;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Integer getAge() {
-        return age;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setAddress(Address address) {
+        this.address = address;
     }
-
-    @Override
-    public String toString() {
-        return "User{" + "userName=" + userName + ", age=" + age + '}';
-    }
+    
+    
 }
