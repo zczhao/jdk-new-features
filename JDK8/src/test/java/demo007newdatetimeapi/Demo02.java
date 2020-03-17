@@ -1,40 +1,16 @@
 package demo007newdatetimeapi;
 
-import java.time.Clock;
-import java.time.DayOfWeek;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
 import org.junit.Test;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
+
 public class Demo02 {
-
-    /**
-     * <pre>
-     *   {@link  java.time.LocalDate}：表示日期，包含年月日，格式为：2020-01-06
-     * </pre>
-     */
-    @Test
-    public void testLocalDate() {
-        LocalDate now = LocalDate.now();
-        System.out.println("now = " + now);
-
-        LocalDate localDate = LocalDate.of(2020, 1, 24);
-        System.out.println("localDate = " + localDate);
-        System.out.println("year = " + localDate.getYear());
-        System.out.println("month = " + localDate.getMonthValue());
-        System.out.println("day = " + localDate.getDayOfMonth());
-    }
 
     /**
      * <pre>
@@ -53,6 +29,23 @@ public class Demo02 {
         System.out.println("second = " + localTime.getSecond());
         System.out.println("nano = " + localTime.getNano());
 
+    }
+
+    /**
+     * <pre>
+     *   {@link  java.time.LocalDate}：表示日期，包含年月日，格式为：2020-01-06
+     * </pre>
+     */
+    @Test
+    public void testLocalDate() {
+        LocalDate now = LocalDate.now();
+        System.out.println("now = " + now);
+
+        LocalDate localDate = LocalDate.of(2020, 1, 24);
+        System.out.println("localDate = " + localDate);
+        System.out.println("year = " + localDate.getYear());
+        System.out.println("month = " + localDate.getMonthValue());
+        System.out.println("day = " + localDate.getDayOfMonth());
     }
 
     /**
@@ -91,12 +84,21 @@ public class Demo02 {
         System.out.println("nano = " + localDateTime.getNano()); // 纳秒 结果：0
     }
 
+    /**
+     * 日期加减
+     */
     @Test
-    public void testLocaDateTime02() {
+    public void testCalc() {
         LocalDateTime now = LocalDateTime.now();
         // 修改时间，修改后返回新的时间对象
         LocalDateTime dateTime = now.withYear(2200);
-        System.out.println("dateTime = " + dateTime);
+        System.out.println("修改后的年份: " + dateTime);
+
+        System.out.println("当前时间："+now);
+        LocalDateTime plusTime = now.plusMonths(1).plusDays(1).plusHours(1).plusMinutes(1).plusSeconds(1);
+        System.out.println("增加1月1天1小时1分钟1秒时间后：" + plusTime);
+        LocalDateTime minusTime = now.minusMonths(2);
+        System.out.println("减少2个月时间后：" + minusTime);
 
         // 增加或减去时间
         // plusXxx()：增加指定的时间
@@ -120,34 +122,34 @@ public class Demo02 {
 
     /**
      * <pre>
-     * {@link  java.time.DateTimeFormatter}：日期格式化类
+     * {@link  java.time.format.DateTimeFormatter}：日期格式化类
      * </pre>
      */
     @Test
     public void testDateTimeFormatter() {
         LocalDateTime now = LocalDateTime.now();
+        System.out.println("当前时间：" + now);
 
         // 格式化
         // JDK自带的时间格式
-        DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
-        String nowStr = now.format(dtf);
-        // String nowStr = dtf.format(now);
-        System.out.println("nowStr = " + nowStr);
+        System.out.println("格式化后：" + now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        System.out.println("格式化后：" + now.format(DateTimeFormatter.ISO_LOCAL_DATE));
+        System.out.println("格式化后：" + now.format(DateTimeFormatter.ISO_LOCAL_TIME));
 
         DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        nowStr = dtf2.format(now);
-        System.out.println("nowStr = " + nowStr);
+        System.out.println("格式化后：" + dtf2.format(now));
+        System.out.println("格式化后：" + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         // 解析
         LocalDateTime parseDateTime = LocalDateTime.parse("2018-08-08 10:54:49", dtf2);
-        System.out.println("parseDateTime = " + parseDateTime);
+        System.out.println("字符串解析：" + parseDateTime);
 
+        // 线程安全的格式化器
         for (int i = 0; i < 50; i++) {
             new Thread(() -> {
                 LocalDateTime parseDateTime2 = LocalDateTime.parse("2018-08-08 10:54:49", dtf2);
                 System.out.println("parseDateTime2 = " + parseDateTime2);
             }).start();
-
         }
 
     }
@@ -198,6 +200,29 @@ public class Demo02 {
         //System.out.println("相差秒：" + duration.toSeconds()); // JDK9 改为public可调用
         System.out.println("相差毫秒：" + duration.toNanos());
 
+        String startTimeStr = "2020-03-01 08:00:00";
+        String endTimeStr = "2020-03-02 08:00:00";
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startTime = LocalDateTime.parse(startTimeStr, dft);
+        LocalDateTime endTime = LocalDateTime.parse(endTimeStr, dft);
+        long hours = ChronoUnit.HOURS.between(startTime, endTime); // 时
+        long minutes = ChronoUnit.MINUTES.between(startTime, endTime);// 分
+        long seconds = ChronoUnit.SECONDS.between(startTime, endTime); // 秒
+        System.out.println("相差小时" + hours);
+        System.out.println("相差分钟" + minutes);
+        System.out.println("相差秒" + seconds);
+
+        System.out.println();
+
+        LocalDateTime nowDateTime = LocalDateTime.now();
+        LocalDateTime yesterday = nowDateTime.minusDays(1);
+        hours = yesterday.until(nowDateTime, ChronoUnit.HOURS);
+        minutes = yesterday.until(nowDateTime, ChronoUnit.MINUTES);
+        seconds = yesterday.until(nowDateTime, ChronoUnit.SECONDS);
+        System.out.println("相差小时" + hours);
+        System.out.println("相差分钟" + minutes);
+        System.out.println("相差秒" + seconds);
+
     }
 
     /**
@@ -244,9 +269,21 @@ public class Demo02 {
     @Test
     public void testTemporalAdjusters() {
         LocalDateTime now = LocalDateTime.now();
+        System.out.println("当前时间：" + now);
+        // 第一天
+        LocalDateTime firstDay = now.withDayOfMonth(1);
+        System.out.println("本月第一天：" + firstDay);
+        // 当天最后一秒
+        LocalDateTime lastSecondOfDay = now.withHour(23).withMinute(59).withSecond(59);
+        System.out.println("当天最后一秒：" + lastSecondOfDay);
+        // 最后一天
+        LocalDateTime lastDay = now.with(TemporalAdjusters.lastDayOfMonth());
+        System.out.println("本月最后一天:" + lastDay);
         // 下一年的第一天
         LocalDateTime firstDayOfNextYear = now.with(TemporalAdjusters.firstDayOfNextYear());
-        System.out.println("firstDayOfNextYear = " + firstDayOfNextYear);
+        System.out.println("下一年的第一天:" + firstDayOfNextYear);
+        // 是否闰年
+        System.out.println("今年是否闰年：" + Year.isLeap(now.getYear()));
     }
 
     /**
@@ -283,5 +320,34 @@ public class Demo02 {
         // withZoneSameLocal：只改时区，不更改时间
         ZonedDateTime withZoneSameLocal = zonedDateTimeFromZone.withZoneSameLocal(ZoneId.of("Asia/Shanghai"));
         System.out.println("withZoneSameLocal = " + withZoneSameLocal);
+    }
+
+    /**
+     * 日期转换
+     */
+    @Test
+    public void testConvertTimes() {
+        LocalDateTime parseTime = LocalDateTime.parse("2019-10-01T22:22:22.222");
+        System.out.println("字符串时间转换：" + parseTime);
+
+        LocalDate formatted = LocalDate.parse("20190101", DateTimeFormatter.BASIC_ISO_DATE);
+        System.out.println("字符串时间转换-指定格式：" + formatted);
+
+        // Date 转换成 LocalDateTime
+        Date date = new Date();
+        ZoneId zoneId = ZoneId.systemDefault();
+        System.out.println("Date 转换成 LocalDateTime：" + LocalDateTime.ofInstant(date.toInstant(), zoneId));
+
+        // LocalDateTime 转换成 Date
+        LocalDateTime localDateTime = LocalDateTime.now();
+        Date toDate = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println("LocalDateTime 转换成 Date：" + toDate);
+
+        // 当前时间转时间戳
+        long epochMilli = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        System.out.println("当前时间转时间戳：" + epochMilli);
+        // 时间戳转换成时间
+        LocalDateTime epochMilliTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(epochMilli), ZoneId.systemDefault());
+        System.out.println("时间戳转换成时间：" + epochMilliTime);
     }
 }
