@@ -7,3 +7,5 @@ target
 build
 *.class
 nb-configuration.xml
+*.iml
+.idea
